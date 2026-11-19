@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نقشه راه هوشمند آکادمی بیوانفورماتیک</title>
+<style>
+  :root{
+    --bg:#070b14; --bg2:#0b1220; --card:rgba(255,255,255,.06); --card2:rgba(255,255,255,.09);
+    --line:rgba(255,255,255,.12); --text:#f1f5f9; --muted:#94a3b8;
+    --teal:#14b8a6; --teal2:#2dd4bf; --cyan:#22d3ee; --violet:#a78bfa; --pink:#f472b6;
+    --amber:#fbbf24; --green:#34d399; --blue:#60a5fa;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Tahoma,'Segoe UI',Vazirmatn,sans-serif;background:var(--bg);color:var(--text);line-height:1.9;overflow-x:hidden}
+  ::-webkit-scrollbar{width:10px} ::-webkit-scrollbar-track{background:#0b1220} ::-webkit-scrollbar-thumb{background:#1e3a3a;border-radius:99px}
+  /* Animated background */
+  .bg-orbs{position:fixed;inset:0;z-index:-2;overflow:hidden;background:radial-gradient(ellipse at 20% 0%,#0f2a2e 0%,transparent 55%),radial-gradient(ellipse at 90% 20%,#1e1b4b 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,#082f2e 0%,transparent 55%),var(--bg)}
+  .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:float 14s ease-in-out infinite}
+  .orb1{width:420px;height:420px;background:#0f766e;top:-120px;right:-80px}
+  .orb2{width:360px;height:360px;background:#6d28d9;top:30%;left:-120px;animation-delay:-4s}
+  .orb3{width:300px;height:300px;background:#0369a1;bottom:-80px;right:25%;animation-delay:-8s}
+  @keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-36px) scale(1.06)}}
+  .grid-lines{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%)}
+  /* Header */
+  header{position:relative;padding:56px 20px 40px;text-align:center;overflow:hidden}
+  .dna-wrap{display:flex;justify-content:center;margin-bottom:8px}
+  .dna{width:110px;height:110px;animation:spinSlow 16s linear infinite}
+  @keyframes spinSlow{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(20,184,166,.12);border:1px solid rgba(45,212,191,.35);color:#5eead4;padding:7px 16px;border-radius:999px;font-size:13px;font-weight:700}
+  .hero-badge .dot{width:8px;height:8px;border-radius:50%;background:#2dd4bf;animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(45,212,191,.6)}50%{box-shadow:0 0 0 8px rgba(45,212,191,0)}}
+  h1{font-size:42px;line-height:1.35;margin:16px 0 10px;background:linear-gradient(90deg,#5eead4,#22d3ee,#a78bfa,#f472b6,#5eead4);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradMove 8s linear infinite}
+  @keyframes gradMove{to{background-position:300% 0}}
+  .hero-sub{max-width:760px;margin:0 auto;color:var(--muted);font-size:17px}
+  .stats{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:28px}
+  .stat{background:var(--card);border:1px solid var(--line);backdrop-filter:blur(12px);border-radius:18px;padding:16px 22px;min-width:130px;animation:fadeUp .8s both}
+  .stat b{display:block;font-size:30px;color:#fff;line-height:1.2}
+  .stat span{font-size:13px;color:var(--muted)}
+  .stat:nth-child(1){animation-delay:.1s}.stat:nth-child(2){animation-delay:.2s}.stat:nth-child(3){animation-delay:.3s}.stat:nth-child(4){animation-delay:.4s}.stat:nth-child(5){animation-delay:.5s}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .hero-cta{margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{cursor:pointer;border:none;font-family:inherit;font-weight:800;font-size:14px;padding:13px 24px;border-radius:999px;transition:.25s}
+  .btn-primary{background:linear-gradient(135deg,#14b8a6,#22d3ee);color:#042f2e;box-shadow:0 8px 28px rgba(20,184,166,.35)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(20,184,166,.5)}
+  .btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--line)}
+  .btn-ghost:hover{background:rgba(255,255,255,.15);transform:translateY(-3px)}
+  /* Nav */
+  nav{position:sticky;top:0;z-index:100;background:rgba(7,11,20,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+  nav .wrap{max-width:1200px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:11px 14px}
+  nav a{padding:8px 15px;border-radius:999px;font-size:13px;font-weight:700;color:var(--muted);border:1px solid transparent;transition:.2s}
+  nav a:hover{color:#fff;background:rgba(255,255,255,.08);border-color:var(--line)}
+  .wrap{max-width:1200px;margin:0 auto;padding:26px 16px 50px}
+  section{margin:34px 0;scroll-margin-top:80px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;backdrop-filter:blur(14px);box-shadow:0 18px 50px rgba(0,0,0,.35)}
+  h2{font-size:26px;margin:0 0 6px}
+  h2 .icon{display:inline-block;margin-left:8px}
+  .sub{color:var(--muted);margin:0 0 18px;font-size:14.5px}
+  h3{font-size:17px;margin:22px 0 10px;color:#5eead4}
+  .reveal{opacity:0;transform:translateY(24px);transition:.7s cubic-bezier(.2,.8,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  /* Roadmap */
+  .phase-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+  .phase-tab{cursor:pointer;font-family:inherit;font-weight:800;font-size:13.5px;padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--muted);transition:.25s}
+  .phase-tab.active{background:linear-gradient(135deg,#14b8a6,#22d3ee);color:#042f2e;border-color:transparent;box-shadow:0 6px 20px rgba(20,184,166,.35)}
+  .timeline{position:relative;display:flex;gap:12px;overflow-x:auto;padding:18px 6px 10px;scrollbar-width:thin}
+  .timeline::before{content:"";position:absolute;top:52px;right:20px;left:20px;height:4px;background:linear-gradient(90deg,#14b8a6,#22d3ee,#a78bfa,#f472b6);border-radius:99px;opacity:.7}
+  .node{position:relative;flex:0 0 118px;text-align:center;cursor:pointer;transition:.25s}
+  .node:hover{transform:translateY(-4px)}
+  .node .circle{position:relative;z-index:2;width:68px;height:68px;margin:0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;background:#0f172a;border:3px solid #334155;color:#fff;transition:.3s}
+  .node.active .circle{background:linear-gradient(135deg,#14b8a6,#22d3ee);color:#042f2e;border-color:#5eead4;box-shadow:0 0 0 8px rgba(20,184,166,.18),0 10px 26px rgba(20,184,166,.4);transform:scale(1.08)}
+  .node.done .circle{background:#064e3b;border-color:#34d399;color:#6ee7b7}
+  .node .label{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.6}
+  .node.active .label{color:#fff;font-weight:800}
+  .week-detail{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:14px;animation:fadeUp .5s both}
+  .week-detail h3{margin-top:0;color:#fff;font-size:19px}
+  .detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+  .detail-box{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .detail-box b{display:block;color:#5eead4;font-size:13px;margin-bottom:4px}
+  .detail-box span{font-size:14px;color:#e2e8f0}
+  /* Pillars */
+  .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .pillar{background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid var(--line);border-radius:20px;padding:20px;cursor:pointer;transition:.3s;position:relative;overflow:hidden}
+  .pillar::before{content:"";position:absolute;top:0;right:0;left:0;height:4px;background:linear-gradient(90deg,var(--c1),var(--c2))}
+  .pillar:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.25);box-shadow:0 18px 40px rgba(0,0,0,.4)}
+  .pillar .p-icon{font-size:30px}
+  .pillar h4{margin:8px 0 4px;font-size:17px}
+  .pillar .p-num{position:absolute;top:14px;left:16px;font-size:34px;font-weight:900;color:rgba(255,255,255,.08)}
+  .pillar .p-body{max-height:0;overflow:hidden;transition:max-height .5s ease,opacity .5s;opacity:0}
+  .pillar.open .p-body{max-height:320px;opacity:1;margin-top:10px}
+  .pillar .p-body p{margin:6px 0;color:var(--muted);font-size:13.5px}
+  .pillar .p-body b{color:#e2e8f0;font-size:13px}
+  /* Daily timeline */
+  .daily{position:relative;padding-right:26px}
+  .daily::before{content:"";position:absolute;right:9px;top:10px;bottom:10px;width:3px;background:linear-gradient(#14b8a6,#22d3ee,#a78bfa);border-radius:99px;opacity:.6}
+  .daily-item{position:relative;display:flex;gap:16px;align-items:flex-start;margin-bottom:14px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;padding:15px 16px;transition:.25s}
+  .daily-item:hover{background:rgba(255,255,255,.08);transform:translateX(-4px)}
+  .daily-item::before{content:"";position:absolute;right:-24px;top:22px;width:14px;height:14px;border-radius:50%;background:#14b8a6;border:3px solid #0b1220;box-shadow:0 0 0 3px rgba(20,184,166,.3)}
+  .daily-item.done{border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.08)}
+  .daily-item.done .d-title{text-decoration:line-through;opacity:.6}
+  .time-badge{flex:0 0 74px;text-align:center;background:linear-gradient(135deg,#14b8a6,#22d3ee);color:#042f2e;font-weight:900;border-radius:12px;padding:8px 6px;font-size:14px}
+  .d-title{font-weight:800;font-size:15px}
+  .d-desc{color:var(--muted);font-size:13.5px;margin:2px 0 0}
+  .check{margin-right:auto;flex:0 0 auto;cursor:pointer;width:30px;height:30px;border-radius:50%;border:2px solid #475569;background:transparent;color:transparent;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.25s}
+  .check:hover{border-color:#34d399}
+  .check.on{background:#34d399;border-color:#34d399;color:#052e16}
+  .progress-bar{height:12px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin:14px 0 6px}
+  .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#14b8a6,#22d3ee,#34d399);border-radius:99px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+  /* Weekly */
+  .toggle{display:inline-flex;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:5px;gap:5px}
+  .toggle button{cursor:pointer;font-family:inherit;font-weight:800;font-size:13.5px;padding:9px 20px;border-radius:999px;border:none;background:transparent;color:var(--muted);transition:.25s}
+  .toggle button.active{background:linear-gradient(135deg,#14b8a6,#22d3ee);color:#042f2e}
+  .week-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px}
+  .day-card{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;transition:.25s;text-align:center}
+  .day-card:hover{transform:translateY(-5px);background:rgba(255,255,255,.09)}
+  .day-card.active{border-color:#2dd4bf;background:rgba(20,184,166,.12);box-shadow:0 10px 28px rgba(20,184,166,.25)}
+  .day-card b{display:block;color:#5eead4;font-size:15px}
+  .day-card span{font-size:12.5px;color:var(--muted);line-height:1.7;display:block;margin-top:4px}
+  /* Genre explorer */
+  .search-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .search-row input{flex:1;min-width:220px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:12px 18px;color:#fff;font-family:inherit;font-size:14px;outline:none}
+  .search-row input:focus{border-color:#2dd4bf;box-shadow:0 0 0 4px rgba(45,212,191,.15)}
+  .filters{display:flex;gap:8px;flex-wrap:wrap}
+  .filters button{cursor:pointer;font-family:inherit;font-weight:700;font-size:12.5px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--muted);transition:.2s}
+  .filters button.active{background:#fff;color:#0f172a;border-color:#fff}
+  .genre-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+  .genre{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:16px;padding:16px;transition:.3s;animation:fadeUp .5s both}
+  .genre:hover{transform:translateY(-5px) scale(1.01);background:rgba(255,255,255,.09)}
+  .genre h4{margin:8px 0 4px;font-size:15px}
+  .genre p{margin:4px 0;color:var(--muted);font-size:13px;line-height:1.8}
+  .genre .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .meta span{background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:11.5px;color:#cbd5e1}
+  .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:800}
+  .b-edu{background:rgba(56,189,248,.18);color:#7dd3fc}.b-news{background:rgba(167,139,250,.18);color:#c4b5fd}
+  .b-promo{background:rgba(251,191,36,.18);color:#fcd34d}.b-fun{background:rgba(244,114,182,.18);color:#f9a8d4}
+  .b-inter{background:rgba(52,211,153,.18);color:#6ee7b7}.b-trust{background:rgba(129,140,248,.18);color:#a5b4fc}
+  .b-ugc{background:rgba(45,212,191,.18);color:#5eead4}.b-event{background:rgba(251,146,60,.18);color:#fdba74}
+  /* Planner */
+  .planner-day{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px;flex-wrap:wrap}
+  .planner-day .dname{flex:0 0 86px;font-weight:800;color:#5eead4;text-align:center}
+  .planner-day input[type=text]{flex:1;min-width:200px;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:#fff;font-family:inherit;font-size:13.5px;outline:none}
+  .planner-day input[type=text]:focus{border-color:#2dd4bf}
+  .planner-day select{background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:10px;padding:10px;color:#fff;font-family:inherit;font-size:13px;outline:none}
+  .planner-day .check{margin:0}
+  /* KPI */
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .kpi{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .kpi b{font-size:14px}
+  .kpi .bar{height:10px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin:10px 0 6px}
+  .kpi .fill{height:100%;width:0;border-radius:99px;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+  .kpi small{color:var(--muted)}
+  /* Checklist */
+  .check-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .check-box{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .check-box h4{margin:0 0 10px;font-size:15px;color:#5eead4}
+  .check-item{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.08);cursor:pointer;font-size:13.5px;color:#e2e8f0}
+  .check-item:last-child{border:none}
+  .check-item .box{flex:0 0 22px;width:22px;height:22px;border-radius:7px;border:2px solid #475569;display:flex;align-items:center;justify-content:center;font-size:13px;color:transparent;margin-top:2px;transition:.2s}
+  .check-item.done .box{background:#34d399;border-color:#34d399;color:#052e16}
+  .check-item.done span{text-decoration:line-through;opacity:.55}
+  .ring-wrap{display:flex;align-items:center;gap:18px;margin-bottom:16px}
+  .ring{width:110px;height:110px;flex:0 0 110px}
+  .ring circle{fill:none;stroke-width:10}
+  .ring .bgc{stroke:rgba(255,255,255,.1)}
+  .ring .fgc{stroke:url(#grad);stroke-linecap:round;stroke-dasharray:283;stroke-dashoffset:283;transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1)}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,80px);background:linear-gradient(135deg,#14b8a6,#22d3ee);color:#042f2e;font-weight:800;padding:13px 24px;border-radius:999px;box-shadow:0 14px 36px rgba(20,184,166,.45);transition:.4s;z-index:200;font-size:14px}
+  .toast.show{transform:translate(-50%,0)}
+  footer{text-align:center;color:var(--muted);font-size:13px;padding:30px 16px 44px}
+  @media(max-width:640px){h1{font-size:29px}.card{padding:18px}.time-badge{flex-basis:64px;font-size:12px}}
+  @media print{nav,.hero-cta,.toast{display:none} body{background:#fff;color:#000} .card{background:#fff;color:#000;border-color:#ddd}}
+</style>
+</head>
+<body>
+
+<div class="bg-orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+<div class="grid-lines"></div>
+
+<header>
+  <div class="dna-wrap">
+    <svg class="dna" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 8 C70 24, 30 40, 70 56 C30 72, 70 88, 30 92" stroke="#2dd4bf" stroke-width="5" stroke-linecap="round"/>
+      <path d="M70 8 C30 24, 70 40, 30 56 C70 72, 30 88, 70 92" stroke="#a78bfa" stroke-width="5" stroke-linecap="round"/>
+      <line x1="38" y1="20" x2="62" y2="20" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+      <line x1="38" y1="48" x2="62" y2="48" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+      <line x1="38" y1="76" x2="62" y2="76" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <span class="hero-badge"><span class="dot"></span> داشبورد تعاملی • قابل استفاده روزانه • پیشرفت شما ذخیره می‌شود</span>
+  <h1>نقشه راه هوشمند<br>آکادمی بیوانفورماتیک</h1>
+  <p class="hero-sub">یک سیستم کامل برای برنامه‌ریزی محتوا: نقشه راه ۱۲ هفته‌ای، ستون‌های استوری، برنامه روزانه، تقویم هفتگی، ژانرها و چک‌لیست — همه در یک جا، با انیمیشن و قابلیت تیک زدن پیشرفت.</p>
+
+  <div class="stats">
+    <div class="stat"><b><span class="counter" data-to="7">0</span></b><span>ستون استوری</span></div>
+    <div class="stat"><b><span class="counter" data-to="26">0</span></b><span>ژانر محتوا</span></div>
+    <div class="stat"><b><span class="counter" data-to="12">0</span></b><span>هفته نقشه راه</span></div>
+    <div class="stat"><b><span class="counter" data-to="8">0</span></b><span>استوری روزانه</span></div>
+    <div class="stat"><b><span class="counter" data-to="1">0</span></b><span>پست روزانه</span></div>
+  </div>
+
+  <div class="hero-cta">
+    <button class="btn btn-primary" onclick="document.getElementById('roadmap').scrollIntoView({behavior:'smooth'})">🚀 شروع نقشه راه</button>
+    <button class="btn btn-ghost" onclick="document.getElementById('planner').scrollIntoView({behavior:'smooth'})">📝 برنامه‌ریز هفتگی من</button>
+    <button class="btn btn-ghost" onclick="window.print()">🖨️ چاپ / PDF</button>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#roadmap">🗺️ نقشه راه</a>
+    <a href="#pillars">🧱 ستون‌ها</a>
+    <a href="#daily">⏰ برنامه روزانه</a>
+    <a href="#weekly">📅 تقویم هفتگی</a>
+    <a href="#genres">🎨 ژانرها</a>
+    <a href="#planner">📝 برنامه‌ریز</a>
+    <a href="#checklist">✅ چک‌لیست</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ROADMAP -->
+<section id="roadmap" class="card reveal">
+  <h2><span class="icon">🗺️</span> نقشه راه ۱۲ هفته‌ای</h2>
+  <p class="sub">روی هر هفته کلیک کن تا جزئیاتش رو ببینی. هفته‌های کامل‌شده رو تیک بزن تا پیشرفتت ذخیره بشه.</p>
+
+  <div class="phase-tabs" id="phaseTabs">
+    <button class="phase-tab active" data-phase="0">فاز ۱: مبانی (۱-۳)</button>
+    <button class="phase-tab" data-phase="1">فاز ۲: آنالیز (۴-۶)</button>
+    <button class="phase-tab" data-phase="2">فاز ۳: کاربرد (۷-۹)</button>
+    <button class="phase-tab" data-phase="3">فاز ۴: آینده و بازار (۱۰-۱۲)</button>
+  </div>
+
+  <div class="timeline" id="timeline"></div>
+  <div class="week-detail" id="weekDetail"></div>
+</section>
+
+<!-- PILLARS -->
+<section id="pillars" class="card reveal">
+  <h2><span class="icon">🧱</span> ۷ ستون استوری</h2>
+  <p class="sub">روی هر ستون کلیک کن تا استراتژی کاملش رو ببینی. هر استوری باید به یکی از این ستون‌ها بخورد.</p>
+  <div class="pillars" id="pillarsGrid"></div>
+</section>
+
+<!-- DAILY -->
+<section id="daily" class="card reveal">
+  <h2><span class="icon">⏰</span> برنامه روزانه استوری (۸ استوری ثابت)</h2>
+  <p class="sub">هر روز همین ۸ استوری در همین ساعت‌ها منتشر می‌شه. بعد از انتشار هر کدوم رو تیک بزن.</p>
+  <div class="progress-bar"><div class="progress-fill" id="dailyProgress"></div></div>
+  <p style="color:var(--muted);font-size:13px;margin:0 0 14px">پیشرفت امروز: <b id="dailyProgressText" style="color:#5eead4">۰ از ۸</b></p>
+  <div class="daily" id="dailyList"></div>
+</section>
+
+<!-- WEEKLY -->
+<section id="weekly" class="card reveal">
+  <h2><span class="icon">📅</span> تقویم هفتگی موضوعی</h2>
+  <p class="sub">هر روز هفته یک تم ثابت داره. روی هر روز کلیک کن تا جزئیاتش رو ببینی.</p>
+  <div class="toggle" id="platformToggle">
+    <button class="active" data-p="ig">📸 اینستاگرام</button>
+    <button data-p="tg">✈️ تلگرام</button>
+  </div>
+  <div class="week-grid" id="weekGrid"></div>
+  <div class="week-detail" id="dayDetail"></div>
+</section>
+
+<!-- GENRES -->
+<section id="genres" class="card reveal">
+  <h2><span class="icon">🎨</span> ژانرهای محتوا — کاوشگر</h2>
+  <p class="sub">همه ۲۶ ژانر رو جستجو و فیلتر کن. برای هر ژانر: هدف، فرمت، ساعت و KPI مشخصه.</p>
+  <div class="search-row">
+    <input type="text" id="genreSearch" placeholder="🔍 جستجو در ژانرها... (مثلاً: ابزار، طنز، فروش)">
+  </div>
+  <div class="filters" id="genreFilters">
+    <button class="active" data-f="all">همه</button>
+    <button data-f="edu">آموزشی</button>
+    <button data-f="news">خبری</button>
+    <button data-f="promo">تبلیغاتی</button>
+    <button data-f="fun">سرگرمی</button>
+    <button data-f="inter">تعاملی</button>
+    <button data-f="trust">اعتمادساز</button>
+    <button data-f="ugc">کاربرمحور</button>
+  </div>
+  <div class="genre-grid" id="genreGrid" style="margin-top:16px"></div>
+  <p id="genreCount" style="color:var(--muted);font-size:13px;margin-top:12px"></p>
+</section>
+
+<!-- PLANNER -->
+<section id="planner" class="card reveal">
+  <h2><span class="icon">📝</span> برنامه‌ریز هفتگی شخصی من</h2>
+  <p class="sub">اینجا عنوان پست هر روز رو خودت بنویس، فرمت رو انتخاب کن و تیک بزن. همه‌چیز در مرورگرت ذخیره می‌شه.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px">
+    <label style="font-weight:800;font-size:14px">هفته:</label>
+    <select id="plannerWeek" style="background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:10px;padding:10px 14px;color:#fff;font-family:inherit"></select>
+    <span style="color:var(--muted);font-size:13px">پیشرفت این هفته: <b id="plannerProgressText" style="color:#5eead4">۰ از ۷</b></span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="plannerProgress"></div></div>
+  <div id="plannerDays" style="margin-top:14px"></div>
+  <button class="btn btn-primary" onclick="showToast('✅ برنامه این هفته ذخیره شد')">💾 ذخیره برنامه</button>
+</section>
+
+<!-- KPI + CHECKLIST -->
+<section id="checklist" class="card reveal">
+  <h2><span class="icon">✅</span> چک‌لیست و KPI</h2>
+  <p class="sub">چک‌لیست‌های اجرایی رو تیک بزن؛ حلقه پیشرفت به‌صورت زنده آپدیت می‌شه.</p>
+
+  <div class="ring-wrap">
+    <svg class="ring" viewBox="0 0 100 100">
+      <defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#14b8a6"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient></defs>
+      <circle class="bgc" cx="50" cy="50" r="45"/>
+      <circle class="fgc" id="ringFg" cx="50" cy="50" r="45"/>
+    </svg>
+    <div>
+      <b style="font-size:22px" id="ringText">۰٪</b>
+      <p style="color:var(--muted);margin:4px 0 0;font-size:13.5px">پیشرفت کلی چک‌لیست<br><span id="ringSub">۰ از ۰ مورد انجام شده</span></p>
+    </div>
+  </div>
+
+  <div class="check-list" id="checkLists"></div>
+
+  <h3>📊 KPI — چی رو بسنجیم؟</h3>
+  <div class="kpi-row">
+    <div class="kpi"><b>📸 اینستاگرام — ذخیره و اشتراک</b><div class="bar"><div class="fill" data-w="85" style="background:linear-gradient(90deg,#14b8a6,#22d3ee)"></div></div><small>مهم‌ترین معیار کشف و ارزش محتوا</small></div>
+    <div class="kpi"><b>✈️ تلگرام — دانلود و بازدید ۲۴ ساعته</b><div class="bar"><div class="fill" data-w="75" style="background:linear-gradient(90deg,#a78bfa,#f472b6)"></div></div><small>معیار عمق و نگه‌داشت مخاطب</small></div>
+    <div class="kpi"><b>🎯 تبدیل — عضو تلگرام و ثبت‌نام</b><div class="bar"><div class="fill" data-w="60" style="background:linear-gradient(90deg,#fbbf24,#fb923c)"></div></div><small>هدف نهایی قیف محتوا</small></div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  نقشه راه هوشمند آکادمی بیوانفورماتیک • پیشرفت شما در همین مرورگر ذخیره می‌شود • قابل چاپ (Ctrl+P)
+</footer>
+
+<div class="toast" id="toast">انجام شد!</div>
+
+<script>
+// ---------- Data ----------
+const weeks = [
+  {n:1, title:"مبانی داده زیستی", goal:"آشنایی تازه‌کار با داده زیستی", ig:"مدرسه بیوانفورماتیک — معرفی حوزه", tg:"مبانی + ژنومیک محاسباتی مقدماتی", fmt:"اینفوگرافیک + کاروسل", kpi:"ذخیره و فالو جدید"},
+  {n:2, title:"ژنوم، توالی و دیتابیس", goal:"شناخت داده و منابع", ig:"ابزار و دیتابیس — معرفی منابع", tg:"دیتابیس‌های زیستی + جستجوی توالی", fmt:"کاروسل + ریلز", kpi:"ذخیره و کلیک"},
+  {n:3, title:"پل بیوانفورماتیک و ژنتیک", goal:"اتصال دو حوزه", ig:"بیوانفورماتیک و ژنتیک — مقایسه و پل", tg:"ژنومیک محاسباتی + تکامل", fmt:"کاروسل + ریلز", kpi:"اشتراک و کامنت"},
+  {n:4, title:"داده‌های حجیم و NGS", goal:"ورود به آنالیز واقعی", ig:"داده حجیم — چالش و فرصت", tg:"Pipeline خوانش و QC", fmt:"ریلز + ویدیو", kpi:"واچ‌تایم و دانلود"},
+  {n:5, title:"آنالیز توالی و واریانت", goal:"مهارت عملی آنالیز", ig:"ابزار آنالیز — دمو کوتاه", tg:"گام‌های آنالیز واریانت", fmt:"ویدیو + کاروسل", kpi:"ذخیره و دانلود"},
+  {n:6, title:"بیان ژن و RNA-seq", goal:"عمق تخصصی", ig:"بیان ژن — اینفوگرافیک", tg:"تحلیل بیان ژن + مثال", fmt:"اینفوگرافیک + ریلز", kpi:"ذخیره و فوروارد"},
+  {n:7, title:"پروتئین، ساختار و عملکرد", goal:"گسترش حوزه", ig:"پروتئین — ساختار و عملکرد", tg:"پیش‌بینی ساختار پروتئین", fmt:"اینفوگرافیک + کاروسل", kpi:"ذخیره"},
+  {n:8, title:"تک‌سلولی و چنداُمیکس", goal:"مرز تخصص", ig:"تک‌سلولی — معرفی حوزه", tg:"چنداُمیکس و یکپارچه‌سازی داده", fmt:"ریلز + کاروسل", kpi:"اشتراک"},
+  {n:9, title:"بیوانفورماتیک بالینی", goal:"کاربرد پزشکی", ig:"بالینی — کاربرد در پزشکی", tg:"پزشکی شخصی‌سازی‌شده محاسباتی", fmt:"کاروسل + ویدیو", kpi:"اعتماد و پیام"},
+  {n:10, title:"صنعت، اقتصاد و بازار کار", goal:"شغل و درآمد", ig:"بازار کار بیوانفورماتیست", tg:"پرونده شرکت‌ها و ابزارها", fmt:"ریلز + اینفوگرافیک", kpi:"فالو و مشاوره"},
+  {n:11, title:"تاریخچه و پیشگامان حوزه", goal:"اعتبار و داستان", ig:"تاریخچه بیوانفورماتیک", tg:"پرونده تاریخی + مصاحبه", fmt:"ریلز + ویدیو", kpi:"اشتراک و کامنت"},
+  {n:12, title:"مرزهای دانش و آینده", goal:"AI و آینده حوزه", ig:"Frontiers — آینده بیوانفورماتیک", tg:"پادکست آینده + AI", fmt:"کاروسل + ریلز", kpi:"ریچ و فالو جدید"},
+];
+const phases = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]];
+
+const pillars = [
+  {icon:"🎯", name:"Daily Quiz", fa:"کوییز روزانه", c1:"#14b8a6", c2:"#22d3ee", goal:"تعامل روزانه و سنجش یادگیری", ex:"تست کوتاه، درست یا غلط، حدس بزن خروجی آنالیز، پیدا کن خطا در pipeline", strat:"هر روز یک کوییز در استوری ۱۳:۰۰؛ پاسخ را در استوری بعد اعلام کن تا مخاطب برگردد."},
+  {icon:"📚", name:"Daily Learning", fa:"یادگیری روزانه", c1:"#60a5fa", c2:"#a78bfa", goal:"آموزش میکرو و ذخیره", ex:"اصطلاح تخصصی، فکت علمی، آیا می‌دانستید؟، داده عجیب", strat:"واژه تخصصی ساعت ۹ و فکت ساعت ۱۱؛ کوتاه، دقیق و قابل ذخیره."},
+  {icon:"🏛️", name:"History", fa:"تاریخچه", c1:"#fbbf24", c2:"#fb923c", goal:"اعتبار و داستان", ex:"برگی از تاریخ بیوانفورماتیک، پیشگامان، ژن‌کاوی تاریخی داده‌ها", strat:"داستان را با یک سوال شروع کن و با یک درس تمام کن؛ هفته ۱۱ تمرکز کامل روی این ستون است."},
+  {icon:"📖", name:"Books & Resources", fa:"کتاب و منابع", c1:"#34d399", c2:"#14b8a6", goal:"مرجعیت و جذب لید", ex:"معرفی کتاب، برشی از کتاب/داکیومنت، معرفی دیتابیس", strat:"در استوری ۱۵:۰۰ به‌صورت چرخشی؛ هر معرفی یک CTA به تلگرام دارد."},
+  {icon:"⚖️", name:"Comparison", fa:"مقایسه", c1:"#f472b6", c2:"#a78bfa", goal:"کمک به تصمیم و ذخیره", ex:"اینفوگرافیک مقایسه‌ای ابزارها، زبان‌ها، پلتفرم‌ها", strat:"جدول مقایسه + پیشنهاد بر اساس سطح مخاطب؛ فرمت اینفوگرافیک بیشترین ذخیره را می‌گیرد."},
+  {icon:"🏥", name:"Applied / Clinical", fa:"کاربردی و بالینی", c1:"#fb7185", c2:"#f472b6", goal:"کاربردی بودن و جذب", ex:"کاربرد بالینی و صنعتی، غربالگری محاسباتی، توصیه کاربردی", strat:"نسخه بیوانفورماتیکی ستون Medical؛ همیشه از «داده» شروع کن، نه از «بیماری»."},
+  {icon:"💬", name:"Community", fa:"کامیونیتی", c1:"#22d3ee", c2:"#34d399", goal:"مشارکت و شناخت مخاطب", ex:"سوال، نظرسنجی، باکس سوال، رای‌گیری ابزار", strat:"باکس سوال ساعت ۲۱:۳۰ و بازنشر بهترین کامنت‌ها ساعت ۲۲:۳۰؛ این حلقه، وفاداری می‌سازد."},
+];
+
+const daily = [
+  {t:"۹:۰۰", title:"واژه تخصصی روز", desc:"Bioinformatics Word of the Day — یک اصطلاح، یک تعریف ساده، یک مثال", pillar:"Daily Learning"},
+  {t:"۱۱:۰۰", title:"آیا می‌دانستید؟", desc:"یک فکت علمی کوتاه و شگفت‌انگیز از دنیای داده زیستی", pillar:"Daily Learning"},
+  {t:"۱۳:۰۰", title:"نظرسنجی با Quiz", desc:"کوییز آنالیز یا کد؛ پاسخ در استوری بعدی", pillar:"Daily Quiz"},
+  {t:"۱۵:۰۰", title:"معرفی کتاب / ابزار / دیتابیس", desc:"به‌صورت چرخشی؛ هر روز یکی", pillar:"Books & Resources"},
+  {t:"۱۸:۰۰", title:"تیزر و شمارش معکوس پست", desc:"معرفی پست امروز و ایجاد انتظار", pillar:"—"},
+  {t:"۲۰:۳۰", title:"انتشار و معرفی پست", desc:"پست امروز منتشر می‌شود و معرفی می‌گردد", pillar:"—"},
+  {t:"۲۱:۳۰", title:"سوال تعاملی با باکس پرسش", desc:"یک سوال باز برای گفتگو با مخاطب", pillar:"Community"},
+  {t:"۲۲:۳۰", title:"بازنشر بهترین کامنت‌ها + CTA", desc:"بهترین پاسخ‌ها بازنشر می‌شود + دعوت به ذخیره و اشتراک", pillar:"Community"},
+];
+
+const weeklyData = {
+  ig: [
+    {d:"شنبه", theme:"مدرسه بیوانفورماتیک", desc:"مبانی و داده زیستی — نقطه شروع تازه‌کار"},
+    {d:"یکشنبه", theme:"ابزار، دیتابیس و AI", desc:"معرفی ابزار و منابع؛ روز جذب سرچ"},
+    {d:"دوشنبه", theme:"بیوانفورماتیک در صنعت و بیوتک", desc:"کاربرد صنعتی و داروسازی"},
+    {d:"سه‌شنبه", theme:"بیوانفورماتیک بالینی و پزشکی", desc:"کاربرد در پزشکی دقیق"},
+    {d:"چهارشنبه", theme:"اقتصاد داده زیستی و شغل", desc:"بازار کار و کسب‌وکار — روز تبدیل"},
+    {d:"پنجشنبه", theme:"آزمایشگاه محاسباتی", desc:"Pipeline، زیرساخت و کنترل کیفیت داده"},
+    {d:"جمعه", theme:"Frontiers", desc:"مرزهای دانش — آینده و AI"},
+  ],
+  tg: [
+    {d:"شنبه", theme:"مدرسه بیوانفورماتیک + ژنومیک محاسباتی", desc:"نسخه عمیق‌تر تم شنبه اینستاگرام"},
+    {d:"یکشنبه", theme:"تکامل محاسباتی + ژنومیک مقایسه‌ای", desc:"مقایسه ژنوم‌ها با ابزار"},
+    {d:"دوشنبه", theme:"بیوانفورماتیک در زندگی + زیست فضایی", desc:"کاربرد روزمره و بین‌رشته‌ای"},
+    {d:"سه‌شنبه", theme:"پرونده شرکت‌ها و ابزارها + History", desc:"شناخت اکوسیستم حوزه"},
+    {d:"چهارشنبه", theme:"کشاورزی و محیط زیست محاسباتی", desc:"تحلیل داده کشاورزی و محیطی"},
+    {d:"پنجشنبه", theme:"پزشکی شخصی‌سازی‌شده محاسباتی", desc:"مدل‌سازی داده فردی"},
+    {d:"جمعه", theme:"پادکست", desc:"گفتگو و مصاحبه عمیق"},
+  ]
+};
+
+const genres = [
+  {n:"آموزش میکرو", cat:"edu", goal:"آموزش سریع + ذخیره", fmt:"ریلز ۳۰-۹۰ ثانیه", time:"۱۹:۳۰-۲۱:۰۰", kpi:"ذخیره، اشتراک"},
+  {n:"آموزش عمیق کاروسلی", cat:"edu", goal:"عمق + اعتبار", fmt:"کاروسل ۷-۱۰ اسلاید", time:"۱۲:۳۰-۱۴:۰۰", kpi:"ذخیره، سوایپ"},
+  {n:"خبری و ترندجکینگ", cat:"news", goal:"دیده‌شدن در خبر داغ", fmt:"ریلز/استوری فوری", time:"فوری + ۲۰:۰۰", kpi:"ریچ، فالو"},
+  {n:"معرفی ابزار و نرم‌افزار", cat:"edu", goal:"کاربردی + جذب سرچ", fmt:"ریلز/کاروسل", time:"۱۰:۰۰-۱۱:۳۰", kpi:"سیو، ذخیره"},
+  {n:"خلاصه مقاله در ۶۰ ثانیه", cat:"edu", goal:"اعتبار علمی", fmt:"ریلز/کاروسل", time:"۱۹:۰۰-۲۰:۳۰", kpi:"ذخیره، کامنت"},
+  {n:"طنز و میم علمی", cat:"fun", goal:"وایرال + سرگرمی", fmt:"ریلز/میم", time:"۲۱:۰۰-۲۳:۰۰", kpi:"اشتراک، ریچ"},
+  {n:"انگیزشی و داستان موفقیت", cat:"trust", goal:"اتصال عاطفی", fmt:"ریلز/کاروسل", time:"۷:۳۰-۸:۳۰", kpi:"اشتراک"},
+  {n:"پشت صحنه آکادمی", cat:"trust", goal:"اعتماد و انسان‌سازی", fmt:"استوری/ریلز", time:"۱۳:۰۰-۱۵:۰۰", kpi:"ریپلای"},
+  {n:"تعاملی: نظرسنجی و کوییز", cat:"inter", goal:"تعامل و شناخت مخاطب", fmt:"استوری/پست سوال", time:"۱۸:۰۰-۲۰:۰۰", kpi:"رای، ریپلای"},
+  {n:"مصاحبه و اسپات‌لایت", cat:"trust", goal:"اعتبار و شبکه‌سازی", fmt:"ریلز/لایو", time:"۲۰:۰۰-۲۱:۳۰", kpi:"واچ‌تایم"},
+  {n:"اینفوگرافیک و داده‌محور", cat:"edu", goal:"ذخیره و اشتراک", fmt:"پست تصویری", time:"۱۲:۰۰-۱۳:۳۰", kpi:"ذخیره"},
+  {n:"مقایسه‌ای ابزارها", cat:"edu", goal:"کمک به تصمیم", fmt:"کاروسل/ریلز", time:"۱۹:۳۰-۲۱:۰۰", kpi:"ذخیره، سیو"},
+  {n:"اشتباهات رایج و افسانه‌ها", cat:"edu", goal:"آموزش ضدخطا", fmt:"ریلز/کاروسل", time:"۲۰:۰۰-۲۱:۳۰", kpi:"ذخیره"},
+  {n:"مسیر شغلی و مهارت", cat:"edu", goal:"جذب دانشجو", fmt:"کاروسل/ریلز", time:"۹:۰۰-۱۰:۳۰", kpi:"ذخیره، فالو"},
+  {n:"تبلیغاتی نرم و فروش دوره", cat:"promo", goal:"تبدیل به ثبت‌نام", fmt:"ریلز/کاروسل", time:"۲۰:۳۰-۲۲:۰۰", kpi:"کلیک، فروش"},
+  {n:"اعتمادساز و اثبات اجتماعی", cat:"trust", goal:"اعتماد قبل از خرید", fmt:"پست/استوری", time:"۱۹:۰۰-۲۰:۰۰", kpi:"پیام"},
+  {n:"محتوای کاربرمحور UGC", cat:"ugc", goal:"مشارکت و تعلق", fmt:"استوری/بازنشر", time:"۱۷:۰۰-۱۹:۰۰", kpi:"تگ، اشتراک"},
+  {n:"لایو و وبینار", cat:"inter", goal:"عمق و تبدیل", fmt:"لایو", time:"پنجشنبه ۲۰:۰۰", kpi:"حاضرین، ثبت‌نام"},
+  {n:"سریالی و چالش‌محور", cat:"inter", goal:"نگه‌داشت و عادت", fmt:"سری ریلز", time:"ثابت ۱۹:۰۰", kpi:"بازگشت مخاطب"},
+  {n:"منابع رایگان و لید مگنت", cat:"promo", goal:"جذب لید", fmt:"کاروسل/پست", time:"۱۲:۳۰-۱۴:۰۰", kpi:"لید"},
+  {n:"رویداد و مناسبت علمی", cat:"news", goal:"دیده‌شدن در مناسبت", fmt:"پست/استوری", time:"صبح مناسبت", kpi:"ریچ"},
+  {n:"هوش مصنوعی و آینده", cat:"news", goal:"پیشرو بودن", fmt:"ریلز/کاروسل", time:"۱۹:۳۰-۲۱:۰۰", kpi:"اشتراک"},
+  {n:"مطالعه موردی واقعی", cat:"edu", goal:"کاربردی بودن", fmt:"کاروسل/ریلز", time:"۱۰:۰۰-۱۱:۳۰", kpi:"ذخیره"},
+  {n:"ساده‌سازی مفاهیم پیچیده", cat:"edu", goal:"دسترس‌پذیری", fmt:"ریلز با مثال", time:"۲۰:۰۰-۲۱:۰۰", kpi:"ذخیره"},
+  {n:"محتوای قابل جستجو SEO", cat:"news", goal:"کشف از سرچ", fmt:"کاروسل با کاور متنی", time:"۱۹:۰۰", kpi:"سرچ"},
+  {n:"درس عمیق تلگرام", cat:"edu", goal:"آموزش کامل", fmt:"متن + فایل", time:"۹:۰۰-۱۱:۰۰", kpi:"دانلود"},
+];
+
+const checkData = [
+  {title:"قبل از انتشار", items:["ژانر و ستون محتوا مشخص است؟","قلاب در ۳ ثانیه/خط اول هست؟","CTA واضح دارد؟","کاور و تیتر خوانا و جستجوپذیر است؟","زمان انتشار طبق چارت است؟"]},
+  {title:"بعد از انتشار", items:["در ۱ ساعت اول به کامنت‌ها جواب بده","استوری مکمل منتشر کن","نسخه تلگرامی/اینستاگرامی را هم بفرست","KPI را در گزارش هفتگی ثبت کن"]},
+  {title:"ماهانه", items:["یک لید مگنت جدید منتشر کن","یک چالش یا مسابقه برگزار کن","یک وبینار رایگان برگزار کن","هایلایت‌ها و پین‌ها را به‌روز کن","تقویم مناسبت‌های ماه بعد را بچین"]},
+];
+
+const catLabel = {edu:"آموزشی", news:"خبری", promo:"تبلیغاتی", fun:"سرگرمی", inter:"تعاملی", trust:"اعتمادساز", ugc:"کاربرمحور"};
+const catClass = {edu:"b-edu", news:"b-news", promo:"b-promo", fun:"b-fun", inter:"b-inter", trust:"b-trust", ugc:"b-ugc"};
+
+// ---------- Helpers ----------
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+function store(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
+function load(key, def){ try{ const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; }catch(e){ return def; } }
+function showToast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2200); }
+
+// ---------- Reveal on scroll ----------
+const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("visible"); }),{threshold:.12});
+$$(".reveal").forEach(el=>io.observe(el));
+
+// ---------- Counters ----------
+const cio = new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting) return;
+  const el=e.target, to=+el.dataset.to; let cur=0;
+  const iv=setInterval(()=>{ cur++; el.textContent=cur; if(cur>=to) clearInterval(iv); },60);
+  cio.unobserve(el);
+}),{threshold:.5});
+$$(".counter").forEach(el=>cio.observe(el));
+
+// ---------- Roadmap ----------
+let activeWeek = 1;
+let doneWeeks = load("bio_doneWeeks", []);
+function renderTimeline(phaseIdx){
+  const tl = $("#timeline"); tl.innerHTML="";
+  phases[phaseIdx].forEach(n=>{
+    const w = weeks[n-1];
+    const div=document.createElement("div");
+    div.className="node"+(n===activeWeek?" active":"")+(doneWeeks.includes(n)?" done":"");
+    div.innerHTML=`<div class="circle">${doneWeeks.includes(n)?"✓":n}</div><div class="label">هفته ${n}<br>${w.title}</div>`;
+    div.onclick=()=>{ activeWeek=n; renderTimeline(phaseIdx); renderWeekDetail(); };
+    tl.appendChild(div);
+  });
+}
+function renderWeekDetail(){
+  const w = weeks[activeWeek-1];
+  const done = doneWeeks.includes(activeWeek);
+  $("#weekDetail").innerHTML=`
+    <h3>هفته ${w.n}: ${w.title} ${done?'<span class="badge b-inter">✓ کامل شده</span>':''}</h3>
+    <p style="color:var(--muted);margin:0">هدف: ${w.goal}</p>
+    <div class="detail-grid">
+      <div class="detail-box"><b>📸 اینستاگرام</b><span>${w.ig}</span></div>
+      <div class="detail-box"><b>✈️ تلگرام</b><span>${w.tg}</span></div>
+      <div class="detail-box"><b>🎨 فرمت غالب</b><span>${w.fmt}</span></div>
+      <div class="detail-box"><b>📊 KPI این هفته</b><span>${w.kpi}</span></div>
+    </div>
+    <button class="btn ${done?'btn-ghost':'btn-primary'}" style="margin-top:14px" onclick="toggleWeek(${w.n})">${done?"↩️ علامت برداشتن":"✓ علامت زدن به‌عنوان کامل‌شده"}</button>`;
+}
+function toggleWeek(n){
+  if(doneWeeks.includes(n)) doneWeeks=doneWeeks.filter(x=>x!==n); else doneWeeks.push(n);
+  store("bio_doneWeeks", doneWeeks);
+  const phaseIdx = phases.findIndex(p=>p.includes(n));
+  renderTimeline(phaseIdx>=0?phaseIdx:0); renderWeekDetail();
+  showToast(doneWeeks.includes(n)?"🎉 هفته کامل شد! آفرین":"علامت برداشته شد");
+}
+$("#phaseTabs").addEventListener("click", e=>{
+  const b=e.target.closest(".phase-tab"); if(!b) return;
+  $$("#phaseTabs .phase-tab").forEach(x=>x.classList.remove("active")); b.classList.add("active");
+  const p=+b.dataset.phase; activeWeek=phases[p][0]; renderTimeline(p); renderWeekDetail();
+});
+renderTimeline(0); renderWeekDetail();
+
+// ---------- Pillars ----------
+const pg=$("#pillarsGrid");
+pillars.forEach((p,i)=>{
+  const d=document.createElement("div");
+  d.className="pillar"; d.style.setProperty("--c1",p.c1); d.style.setProperty("--c2",p.c2);
+  d.innerHTML=`<div class="p-num">${i+1}</div><div class="p-icon">${p.icon}</div><h4>${p.name} — ${p.fa}</h4><p style="color:var(--muted);font-size:13.5px;margin:0">${p.goal}</p>
+  <div class="p-body"><p><b>نمونه‌ها:</b> ${p.ex}</p><p><b>استراتژی:</b> ${p.strat}</p></div>`;
+  d.onclick=()=>d.classList.toggle("open");
+  pg.appendChild(d);
+});
+
+// ---------- Daily ----------
+let dailyDone = load("bio_dailyDone", []);
+function renderDaily(){
+  const list=$("#dailyList"); list.innerHTML="";
+  daily.forEach((d,i)=>{
+    const done=dailyDone.includes(i);
+    const el=document.createElement("div");
+    el.className="daily-item"+(done?" done":"");
+    el.innerHTML=`<div class="time-badge">${d.t}</div><div><div class="d-title">${d.title}</div><p class="d-desc">${d.desc}</p><span class="badge b-inter" style="margin-top:6px">${d.pillar}</span></div><button class="check ${done?'on':''}" onclick="toggleDaily(${i})">${done?"✓":""}</button>`;
+    list.appendChild(el);
+  });
+  const pct=Math.round(dailyDone.length/daily.length*100);
+  $("#dailyProgress").style.width=pct+"%";
+  $("#dailyProgressText").textContent=`${dailyDone.length} از ${daily.length} (${pct}٪)`;
+}
+function toggleDaily(i){
+  if(dailyDone.includes(i)) dailyDone=dailyDone.filter(x=>x!==i); else dailyDone.push(i);
+  store("bio_dailyDone", dailyDone); renderDaily(); updateRing();
+  if(dailyDone.length===daily.length) showToast("🎉 برنامه امروز کامل شد!");
+}
+renderDaily();
+
+// ---------- Weekly ----------
+let platform="ig", activeDay=0;
+function renderWeekly(){
+  const g=$("#weekGrid"); g.innerHTML="";
+  weeklyData[platform].forEach((d,i)=>{
+    const el=document.createElement("div");
+    el.className="day-card"+(i===activeDay?" active":"");
+    el.innerHTML=`<b>${d.d}</b><span>${d.theme}</span>`;
+    el.onclick=()=>{ activeDay=i; renderWeekly(); renderDayDetail(); };
+    g.appendChild(el);
+  });
+}
+function renderDayDetail(){
+  const d=weeklyData[platform][activeDay];
+  $("#dayDetail").innerHTML=`<h3>${d.d} — ${d.theme}</h3><p style="color:var(--muted);margin:0">${d.desc}</p>
+  <div class="detail-grid">
+    <div class="detail-box"><b>🎯 هدف روز</b><span>${platform==="ig"?"دیده‌شدن، ذخیره و جذب فالوور":"عمق، دانلود و تبدیل"}</span></div>
+    <div class="detail-box"><b>🎨 فرمت پیشنهادی</b><span>${activeDay===4?"ریلز + کاروسل فروش نرم":"ریلز / کاروسل / اینفوگرافیک (چرخشی)"}</span></div>
+    <div class="detail-box"><b>⏰ ساعت پست</b><span>۱۹:۳۰ – ۲۱:۰۰ (اوج اسکرول)</span></div>
+    <div class="detail-box"><b>📱 استوری</b><span>۸ استوری ثابت روزانه</span></div>
+  </div>`;
+}
+$("#platformToggle").addEventListener("click", e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  $$("#platformToggle button").forEach(x=>x.classList.remove("active")); b.classList.add("active");
+  platform=b.dataset.p; activeDay=0; renderWeekly(); renderDayDetail();
+});
+renderWeekly(); renderDayDetail();
+
+// ---------- Genres ----------
+let genreFilter="all", genreQuery="";
+function renderGenres(){
+  const g=$("#genreGrid"); g.innerHTML="";
+  const list=genres.filter(x=>(genreFilter==="all"||x.cat===genreFilter)&&(x.n.includes(genreQuery)||x.goal.includes(genreQuery)));
+  list.forEach((x,i)=>{
+    const el=document.createElement("div");
+    el.className="genre"; el.style.animationDelay=(i*0.04)+"s";
+    el.innerHTML=`<span class="badge ${catClass[x.cat]}">${catLabel[x.cat]}</span><h4>${x.n}</h4><p><b style="color:#e2e8f0">هدف:</b> ${x.goal}</p><div class="meta"><span>🎨 ${x.fmt}</span><span>⏰ ${x.time}</span><span>📊 ${x.kpi}</span></div>`;
+    g.appendChild(el);
+  });
+  $("#genreCount").textContent=`${list.length} ژانر نمایش داده شد (از ${genres.length})`;
+}
+$("#genreFilters").addEventListener("click", e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  $$("#genreFilters button").forEach(x=>x.classList.remove("active")); b.classList.add("active");
+  genreFilter=b.dataset.f; renderGenres();
+});
+$("#genreSearch").addEventListener("input", e=>{ genreQuery=e.target.value.trim(); renderGenres(); });
+renderGenres();
+
+// ---------- Planner ----------
+const dayNames=["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه","جمعه"];
+const fmtOptions=["ریلز","کاروسل","اینفوگرافیک","ویدیو","تلگرام","استوری","لایو"];
+let plannerData = load("bio_planner", {});
+let plannerWeek = 1;
+const sel=$("#plannerWeek");
+for(let i=1;i<=12;i++){ const o=document.createElement("option"); o.value=i; o.textContent="هفته "+i; sel.appendChild(o); }
+sel.addEventListener("change", ()=>{ plannerWeek=+sel.value; renderPlanner(); });
+function plannerKey(){ return "w"+plannerWeek; }
+function renderPlanner(){
+  const wrap=$("#plannerDays"); wrap.innerHTML="";
+  const data=plannerData[plannerKey()]||{};
+  dayNames.forEach((dn,i)=>{
+    const row=document.createElement("div");
+    row.className="planner-day";
+    const val=data[i]||{title:"",fmt:"ریلز",done:false};
+    row.innerHTML=`<div class="dname">${dn}</div>
+      <input type="text" placeholder="عنوان پست این روز را بنویس..." value="${val.title.replace(/"/g,'&quot;')}" data-i="${i}" class="p-title">
+      <select data-i="${i}" class="p-fmt">${fmtOptions.map(f=>`<option ${f===val.fmt?"selected":""}>${f}</option>`).join("")}</select>
+      <button class="check ${val.done?'on':''}" data-i="${i}" onclick="togglePlanner(${i})">${val.done?"✓":""}</button>`;
+    wrap.appendChild(row);
+  });
+  wrap.querySelectorAll(".p-title").forEach(inp=>inp.addEventListener("input", ()=>{
+    const i=inp.dataset.i; plannerData[plannerKey()]=plannerData[plannerKey()]||{};
+    plannerData[plannerKey()][i]=plannerData[plannerKey()][i]||{title:"",fmt:"ریلز",done:false};
+    plannerData[plannerKey()][i].title=inp.value; store("bio_planner", plannerData);
+  }));
+  wrap.querySelectorAll(".p-fmt").forEach(s=>s.addEventListener("change", ()=>{
+    const i=s.dataset.i; plannerData[plannerKey()]=plannerData[plannerKey()]||{};
+    plannerData[plannerKey()][i]=plannerData[plannerKey()][i]||{title:"",fmt:"ریلز",done:false};
+    plannerData[plannerKey()][i].fmt=s.value; store("bio_planner", plannerData);
+  }));
+  const doneCount=Object.values(data).filter(v=>v.done).length;
+  $("#plannerProgress").style.width=(doneCount/7*100)+"%";
+  $("#plannerProgressText").textContent=`${doneCount} از ۷`;
+}
+function togglePlanner(i){
+  plannerData[plannerKey()]=plannerData[plannerKey()]||{};
+  plannerData[plannerKey()][i]=plannerData[plannerKey()][i]||{title:"",fmt:"ریلز",done:false};
+  plannerData[plannerKey()][i].done=!plannerData[plannerKey()][i].done;
+  store("bio_planner", plannerData); renderPlanner();
+  if(plannerData[plannerKey()][i].done) showToast("✓ پست این روز انجام شد");
+}
+renderPlanner();
+
+// ---------- Checklist + Ring ----------
+let checkDone = load("bio_checkDone", []);
+function renderChecklists(){
+  const wrap=$("#checkLists"); wrap.innerHTML="";
+  checkData.forEach((group,gi)=>{
+    const box=document.createElement("div");
+    box.className="check-box";
+    box.innerHTML=`<h4>${group.title}</h4>`;
+    group.items.forEach((item,ii)=>{
+      const id=gi+"-"+ii, done=checkDone.includes(id);
+      const el=document.createElement("div");
+      el.className="check-item"+(done?" done":"");
+      el.innerHTML=`<div class="box">✓</div><span>${item}</span>`;
+      el.onclick=()=>{
+        if(checkDone.includes(id)) checkDone=checkDone.filter(x=>x!==id); else checkDone.push(id);
+        store("bio_checkDone", checkDone); renderChecklists(); updateRing();
+      };
+      box.appendChild(el);
+    });
+    wrap.appendChild(box);
+  });
+}
+function totalChecks(){ return checkData.reduce((a,g)=>a+g.items.length,0); }
+function updateRing(){
+  const total=totalChecks()+daily.length;
+  const done=checkDone.length+dailyDone.length;
+  const pct=Math.round(done/total*100);
+  $("#ringFg").style.strokeDashoffset=283-(283*pct/100);
+  $("#ringText").textContent=pct+"٪";
+  $("#ringSub").textContent=`${done} از ${total} مورد انجام شده`;
+}
+renderChecklists(); updateRing();
+
+// ---------- KPI bars animate on view ----------
+const kio=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){ e.target.style.width=e.target.dataset.w+"%"; kio.unobserve(e.target); }
+}),{threshold:.4});
+$$(".kpi .fill").forEach(el=>kio.observe(el));
+</script>
+
+</body>
+</html>
